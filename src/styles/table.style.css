@@ -1,0 +1,40 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 250px;
+    min-width: 950px;
+    border: 1px inset black;
+
+    tr:nth-of-type(even) {
+        background-color: rgba(25, 147, 251, 0.3);
+      }
+
+    tr {
+        display: flex;
+        justify-content: space-between;
+
+        th {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+    
+        input {
+            width: 100px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        td {
+            width: 100%;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
