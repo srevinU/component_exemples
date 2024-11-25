@@ -32,7 +32,8 @@ export function Table() {
 
     const filteredPersons = persons.filter((person: Person) => {
         return Object.keys(search).every((key) => {
-            return person[key as keyof Person].toString().toLowerCase().includes(search[key].toLowerCase());
+            const value = person[key as keyof Person];
+            return value !== undefined && value.toString().toLowerCase().includes(search[key].toLowerCase());
         });
     });
 
