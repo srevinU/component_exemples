@@ -1,7 +1,8 @@
 pipeline {
     agent any
     tools {nodejs "22.3.0"}
-    stage("Build") {
+    stages {
+        stage("Build") {
             steps {
                 script {
                     echo "Building application ..."
@@ -9,7 +10,6 @@ pipeline {
                 }
             }
         }
-    stages {
          stage("Deploy") {
             steps {
                 script {
