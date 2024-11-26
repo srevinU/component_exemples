@@ -7,7 +7,5 @@ services:
       context: "."
       dockerfile: "./Dockerfile"
       target: ${TARGET}
-    volumes:
-      - ${VOLUME}
     ports:
       - 3020:3000
