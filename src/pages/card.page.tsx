@@ -41,7 +41,7 @@ export function CardPage() {
     ]
  
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '50px' }}>
             {persons.map(person => <Card person={person} />)}
         </div>
     )

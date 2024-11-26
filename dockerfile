@@ -9,4 +9,9 @@ FROM base AS development
 COPY . /app/
 CMD ["npm", "run", "dev"]
 
-EXPOSE 5173
+FROM base AS production
+COPY ./dist /app/dist
+COPY ./public /app/public
+COPY tsconfig.json /app/
+COPY vite.config.ts /app/
+CMD ["npm", "run", "preview"]
