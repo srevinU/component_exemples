@@ -14,5 +14,6 @@ COPY ./dist /app/dist
 COPY ./public /app/public
 COPY tsconfig.json /app/
 COPY vite.config.ts /app/
+CMD ["mkdir", "/app/dist"]
 CMD ["npm", "run", "build2"]
 CMD ["npm", "run", "preview"]
