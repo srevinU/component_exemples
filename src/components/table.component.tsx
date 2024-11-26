@@ -65,7 +65,7 @@ export function Table() {
                 <tr>
                     <th>
                         <div className='title'>
-                            <label onClick={() => handleSort('firstName', 'asc')}>First Name</label>
+                            <label onClick={() => handleSort('firstName', 'dsc')}>First Name</label>
                             <input type="text" name="firstName" onChange={handleChange} placeholder='Search...'/>
                         </div>
                         <div className='filter'>
@@ -75,7 +75,7 @@ export function Table() {
                     </th>
                     <th>
                         <div>
-                            <label onClick={() => handleSort('lastName', 'asc')}>Last Name</label>
+                            <label onClick={() => handleSort('lastName', 'dsc')}>Last Name</label>
                             <input type="text" name="lastName" onChange={handleChange} placeholder='Search...'/>
                         </div>
                         <div className='filter'>
@@ -85,7 +85,7 @@ export function Table() {
                     </th>
                     <th>
                         <div>
-                            <label onClick={() => handleSort('birthday', 'asc')}>Birthday</label>
+                            <label onClick={() => handleSort('birthday', 'dsc')}>Birthday</label>
                             <input type="text" name="birthday" onChange={handleChange} placeholder='Search...'/>
                         </div>
                         <div className='filter'>
@@ -95,7 +95,7 @@ export function Table() {
                     </th>    
                     <th>
                         <div>
-                            <label onClick={() => handleSort('gender', 'asc')}>Gender</label>
+                            <label onClick={() => handleSort('gender', 'dsc')}>Gender</label>
                             <input type="text" name="gender" onChange={handleChange} placeholder='Search...'/>
                         </div>
                         <div className='filter'>
@@ -105,7 +105,7 @@ export function Table() {
                     </th>
                     <th>
                         <div>
-                            <label onClick={() => handleSort('email', 'asc')}>Email</label>
+                            <label onClick={() => handleSort('email', 'dsc')}>Email</label>
                             <input type="text" name="email" onChange={handleChange} placeholder='Search...'/>
                         </div>
                         <div className='filter'>
@@ -115,7 +115,7 @@ export function Table() {
                     </th>
                     <th>
                         <div>
-                            <label onClick={() => handleSort('phone', 'asc')}>Phone Number</label>
+                            <label onClick={() => handleSort('phone', 'dsc')}>Phone Number</label>
                             <input type="text" name="phone" onChange={handleChange} placeholder='Search...'/>
                         </div>
                         <div className='filter'>
@@ -125,7 +125,7 @@ export function Table() {
                     </th>
                     <th>
                         <div>
-                            <label onClick={() => handleSort('option', 'asc')}>Option</label>
+                            <label onClick={() => handleSort('option', 'dsc')}>Option</label>
                             <input type="text" name="option" onChange={handleChange} placeholder='Search...'/>
                         </div>
                         <div className='filter'>
