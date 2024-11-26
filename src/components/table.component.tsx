@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../styles/table.style.css';
 import { Person } from '../types/person.type';
+import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 
 export function Table() {
 
@@ -12,56 +13,125 @@ export function Table() {
         { id: "5", firstName: 'Titi', lastName: 'Smith', birthday: '01/01/1995', gender: 'Other', email: 'titi@email.com', phone: '1234567890', option: 'Option 2' },
     ];
 
-    const [search, setSearch] = useState<{ [key: string]: string }>({
-        firstName: '',
-        lastName: '',
-        birthday: '',
-        gender: '',
-        email: '',
-        phone: '',
-        option: ''
+    const [filteredPersons, setFilteredPersons] = useState<Person[]>(persons.sort((a, b) => a.firstName.localeCompare(b.firstName)));
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        const filtered = persons.filter((person: Person) => 
+          (person[event.target.name as keyof Person] as string).toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredPersons(filtered);
+      };
+
+    const [sortIcons, setSortIcons] = useState<{ [key: string]: { up: boolean; down: boolean } }>({
+        firstName: { up: true, down: false },
+        lastName: { up: false, down: false },
+        birthday: { up: false, down: false },
+        gender: { up: false, down: false },
+        email: { up: false, down: false },
+        phone: { up: false, down: false },
+        option: { up: false, down: false },
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setSearch(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
 
-    const filteredPersons = persons.filter((person: Person) => {
-        return Object.keys(search).every((key) => {
-            const value = person[key as keyof Person];
-            return value !== undefined && value.toString().toLowerCase().includes(search[key].toLowerCase());
+    const handleSort = (property: keyof Person, action: string) => {
+        const sortedPersons = [...filteredPersons].sort((a, b) => {
+          if (a[property] !== undefined && b[property] !== undefined && a[property] < b[property]) {
+            return action === 'asc' ? 1 : -1;
+          }
+          if (a[property] !== undefined && b[property] !== undefined && a[property] > b[property]) {
+            return action === 'asc' ? -1 : 1;
+          }
+          return 0;
         });
-    });
+      
+        setFilteredPersons(sortedPersons);
+
+        setSortIcons({
+            firstName: { up: property === 'firstName' && action !== 'asc', down: property === 'firstName' && action === 'asc' },
+            lastName: { up: property === 'lastName' && action !== 'asc', down: property === 'lastName' && action === 'asc' },
+            birthday: { up: property === 'birthday' && action !== 'asc', down: property === 'birthday' && action === 'asc' },
+            gender: { up: property === 'gender' && action !== 'asc', down: property === 'gender' && action === 'asc' },
+            email: { up: property === 'email' && action !== 'asc', down: property === 'email' && action === 'asc' },
+            phone: { up: property === 'phone' && action !== 'asc', down: property === 'phone' && action === 'asc' },
+            option: { up: property === 'option' && action !== 'asc', down: property === 'option' && action === 'asc' },
+        });
+      };
 
     return (
        <>
         <table>
             <thead>
                 <tr>
-                    <th>First Name
-                        <input type="text" name="firstName" onChange={handleChange} placeholder='Search...'/>
+                    <th>
+                        <div className='title'>
+                            <label onClick={() => handleSort('firstName', 'asc')}>First Name</label>
+                            <input type="text" name="firstName" onChange={handleChange} placeholder='Search...'/>
+                        </div>
+                        <div className='filter'>
+                            { sortIcons.firstName.up &&  <FaArrowUp className="icon" onClick={() => handleSort('firstName', 'asc')}/>}
+                            { sortIcons.firstName.down && <FaArrowDown className="icon" onClick={() => handleSort('firstName', 'dsc')}/>}
+                        </div>
                     </th>
-                    <th>Last Name
-                        <input type="text" name="lastName" onChange={handleChange} placeholder='Search...'/>
+                    <th>
+                        <div>
+                            <label onClick={() => handleSort('lastName', 'asc')}>Last Name</label>
+                            <input type="text" name="lastName" onChange={handleChange} placeholder='Search...'/>
+                        </div>
+                        <div className='filter'>
+                            { sortIcons.lastName.up && <FaArrowUp className="icon" onClick={() => handleSort('lastName', 'asc')} />}
+                            { sortIcons.lastName.down && <FaArrowDown className="icon" onClick={() => handleSort('lastName', 'desc')} />}
+                        </div>
                     </th>
-                    <th>Birthday
-                        <input type="text" name="birthday" onChange={handleChange} placeholder='Search...'/>
+                    <th>
+                        <div>
+                            <label onClick={() => handleSort('birthday', 'asc')}>Birthday</label>
+                            <input type="text" name="birthday" onChange={handleChange} placeholder='Search...'/>
+                        </div>
+                        <div className='filter'>
+                            { sortIcons.birthday.up && <FaArrowUp className="icon" onClick={() => handleSort('birthday', 'asc')}/>}
+                            { sortIcons.birthday.down && <FaArrowDown className="icon" onClick={() => handleSort('birthday', 'dsc')}/>}
+                        </div>
                     </th>    
-                    <th>Gender
-                        <input type="text" name="gender" onChange={handleChange} placeholder='Search...'/>
+                    <th>
+                        <div>
+                            <label onClick={() => handleSort('gender', 'asc')}>Gender</label>
+                            <input type="text" name="gender" onChange={handleChange} placeholder='Search...'/>
+                        </div>
+                        <div className='filter'>
+                            { sortIcons.gender.up && <FaArrowUp className="icon" onClick={() => handleSort('gender', 'asc')}/>}
+                            { sortIcons.gender.down && <FaArrowDown className="icon" onClick={() => handleSort('gender', 'dsc')}/>}
+                        </div>
                     </th>
-                    <th>Email
-                        <input type="text" name="email" onChange={handleChange} placeholder='Search...'/>
+                    <th>
+                        <div>
+                            <label onClick={() => handleSort('email', 'asc')}>Email</label>
+                            <input type="text" name="email" onChange={handleChange} placeholder='Search...'/>
+                        </div>
+                        <div className='filter'>
+                            { sortIcons.email.up && <FaArrowUp className="icon" onClick={() => handleSort('email', 'asc')}/>}
+                            { sortIcons.email.down && <FaArrowDown className="icon" onClick={() => handleSort('email', 'dsc')}/>}
+                        </div>
                     </th>
-                    <th>Phone Number
-                        <input type="text" name="phone" onChange={handleChange} placeholder='Search...'/>
+                    <th>
+                        <div>
+                            <label onClick={() => handleSort('phone', 'asc')}>Phone Number</label>
+                            <input type="text" name="phone" onChange={handleChange} placeholder='Search...'/>
+                        </div>
+                        <div className='filter'>
+                            { sortIcons.phone.up && <FaArrowUp className="icon" onClick={() => handleSort('phone', 'asc')}/>}
+                            { sortIcons.phone.down && <FaArrowDown className="icon" onClick={() => handleSort('phone', 'dsc')}/>}
+                        </div>
                     </th>
-                    <th>Option
-                        <input type="text" name="option" onChange={handleChange} placeholder='Search...'/>
+                    <th>
+                        <div>
+                            <label onClick={() => handleSort('option', 'asc')}>Option</label>
+                            <input type="text" name="option" onChange={handleChange} placeholder='Search...'/>
+                        </div>
+                        <div className='filter'>
+                            { sortIcons.option.up && <FaArrowUp className="icon" onClick={() => handleSort('option', 'asc')}/>}
+                            { sortIcons.option.down && <FaArrowDown className="icon" onClick={() => handleSort('option', 'dsc')}/>}
+                        </div>
                     </th>
                 </tr>
             </thead>

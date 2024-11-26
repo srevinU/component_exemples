@@ -1,3 +1,5 @@
+
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -17,9 +19,30 @@ table {
         display: flex;
         justify-content: space-between;
 
+        label {
+            cursor: pointer;
+        }
+
+        .icon {
+            cursor: pointer;
+            position: fixed;
+        }
+
         th {
             padding: 10px;
             border-bottom: 1px solid #ccc;
+            display: flex;
+
+            .filter {
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                margin-left: 5px;
+
+                .icon {
+                    cursor: pointer;
+                }
+            }
         }
     
         input {
@@ -27,6 +50,7 @@ table {
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            margin-top: 5px;
         }
 
         td {
