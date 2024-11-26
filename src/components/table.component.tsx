@@ -11,9 +11,16 @@ export function Table() {
         { id: "3", firstName: 'Toto', lastName: 'Smith', birthday: '01/01/1993', gender: 'Other', email: 'toto@email.com', phone: '1234567890', option: 'Option 3' },
         { id: "4", firstName: 'Tata', lastName: 'Smith', birthday: '01/01/1994', gender: 'Other', email: 'tata@email.com', phone: '1234567890', option: 'Option 1' },
         { id: "5", firstName: 'Titi', lastName: 'Smith', birthday: '01/01/1995', gender: 'Other', email: 'titi@email.com', phone: '1234567890', option: 'Option 2' },
+        { id: "6", firstName: 'Tewtew', lastName: 'mat', birthday: '01/01/1996', gender: 'Male', email: 'twtw@email.com', phone: '1234567890', option: 'Option 3' },
+        { id: "7", firstName: 'Teytey', lastName: 'mat', birthday: '01/01/1996', gender: 'Female', email: 'tyty@email.com', phone: '1234567890', option: 'Option 3' },
+        { id: "8", firstName: 'Tewtew', lastName: 'mat', birthday: '01/01/1996', gender: 'Male', email: 'twtw@email.com', phone: '1234567890', option: 'Option 3' },
+        { id: "9", firstName: 'Teztez', lastName: 'mat', birthday: '01/01/1996', gender: 'Female', email: 'tztz@email.com', phone: '1234567890', option: 'Option 3' },
+        { id: "10", firstName: 'Tevtev', lastName: 'mat', birthday: '01/01/1996', gender: 'Male', email: 'Tevtev@email.com', phone: '1234567890', option: 'Option 3' },
     ];
 
     const [filteredPersons, setFilteredPersons] = useState<Person[]>(persons.sort((a, b) => a.firstName.localeCompare(b.firstName)));
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -57,6 +64,16 @@ export function Table() {
             option: { up: property === 'option' && action !== 'asc', down: property === 'option' && action === 'asc' },
         });
       };
+
+      const handlePageChange = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+        };
+    
+      const indexOfLastItem = currentPage * itemsPerPage;
+      const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+      const currentItems = filteredPersons.slice(indexOfFirstItem, indexOfLastItem);
+  
+      const totalPages = Math.ceil(filteredPersons.length / itemsPerPage);
 
     return (
        <>
@@ -136,7 +153,7 @@ export function Table() {
                 </tr>
             </thead>
             <tbody>
-                {filteredPersons.map((item: Person) => (
+                {currentItems.map((item: Person) => (
                     <tr key={item.id}>
                         <td>{item.firstName}</td>
                         <td>{item.lastName}</td>
@@ -148,6 +165,17 @@ export function Table() {
                     </tr>
                 ))}
             </tbody>
+            <div className="pagination">
+            {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                    key={index + 1}
+                    onClick={() => handlePageChange(index + 1)}
+                    className={currentPage === index + 1 ? 'active' : ''}
+                >
+                    {index + 1}
+                </button>
+            ))}
+        </div>
         </table>
        </>
     )
